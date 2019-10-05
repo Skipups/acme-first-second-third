@@ -39,62 +39,97 @@
         <h1>Acme First, Second, Third</h1>
         <div id= 'lists'>
             <div class = 'box' id= 'first'>
-                <button id='moveLeft'><</button>
-                <button id='moveRight'>></button>
+                <button id='mLFirst'><</button>
+                <button id='mRFirst'>></button>
                 <p>First</p>
                 <ul id='firstSlots'></ul>
             </div>
             <div class = 'box' id= 'second'>
-                <button id='moveLeft'><</button>
-                <button id='moveRight'>></button>
+                <button id='mLSecond'><</button>
+                <button id='mRSecond'>></button>
                 <p>SECOND</p>
                 <ul id='secondSlots'></ul>
             </div>
             <div class = 'box' id= 'third'>
-                <button id='moveLeft'><</button>
-                <button id='moveRight'>></button>
+                    <button id='mLThird'><</button>
+                <button id='mRThird'>></button>
                 <p>THIRD</p>
                 <ul id='thirdSlots'></ul>
             </div>
         </div>
     </body>
     <script>
-        const slots = ['first', 'second', 'third'];
+        // selecting all box elements
+        const box = document.querySelectorAll('.box');
+        console.log('box', box);
+        // const slots = ['first', 'second', 'third'];
 
         const users = [
-            { id: 1, name: 'moe', slot: 'first'},
-            { id: 2, name: 'larry', slot: 'second'},
-            { id: 3, name: 'curly', slot: 'third'},
-            { id: 4, name: 'lucy', slot: 'third', selcected: true},
+            { id: 1, name: 'moe', slot: 'first', selected: true},
+            { id: 2, name: 'larry', slot: 'second', selected: false},
+            { id: 3, name: 'curly', slot: 'third', selected: false},
+            { id: 4, name: 'lucy', slot: 'third', selected: true},
         ];
         //helper function determines which slot each person belongs, returns an array 
         function popUsers (users){
         const usersToPopulate= users.reduce( (acc, current) => {
-            if (current.slot === 'first'){
-                acc[0].push(`<li>${current.name}</li>`)
+            if (current.slot === 'first') {
+                acc[0].push(`<li id=${current.id} class= ${current.selected ? className='selected' : className='notSelected'}>${current.name}</li>`)
+                
             }
             if (current.slot === 'second'){
-                acc[1].push(`<li>${current.name}</li>`)
+                acc[1].push(`<li id=${current.id} class= ${current.selected ? className='selected' : className='notSelected'}>${current.name}</li>`)
             }
             if (current.slot === 'third'){
-                acc[2].push(`<li>${current.name}</li>`)
+                acc[2].push(`<li id=${current.id} class= ${current.selected ? className='selected' : className='notSelected'}>${current.name}</li>`)
             }
            return acc
         }, [[],[],[]])
-        
+        //console.log('usersToPopulate',usersToPopulate)
         // displays each person in the correct slot
         firstSlots.innerHTML=usersToPopulate[0].join("");
         secondSlots.innerHTML=usersToPopulate[1].join("");
         thirdSlots.innerHTML=usersToPopulate[2].join("");
+
+       
     };
-        // function invocation
+        // function invocation to populate page
         popUsers(users);
-        // grab button
-        const buttons = document.querySelectorAll('#moveLeft, #moveRight');
-        console.log(buttons);
-        buttons.addEventListener('click', (evt)=>{
-        console.log('buttonclicked')
-        });
+       
+        // button.addEventListener('click', (ev)=> {
+        // console.log(ev.target)
+        // });
+       
+        
+        //get all ul container for each box
+        const firstSlotsBox = document.querySelector('#firstSlots');
+        const secondSlotsBox = document.querySelector('#secondSlots');
+        const thirdSlotsBox = document.querySelector('#thirdSlots');
+        console.log('firstSlotsBox',firstSlotsBox)
+        
+        //select person in box 1
+        firstSlotsBox.addEventListener('click', (ev)=> {
+            console.log("name is",ev.target.getElementsByClassName("selected"))
+            console.log($('select option:selected').attr('class'));
+       if (ev.target.className === 'SELECTED'){
+           console.log(ev.target.name)
+       } else {
+           console.log('nope')
+       }
+        // const selectedPerson = ev.target;
+        // console.log('ev.target',ev.target)
+        // console.log('ev.target.parentNode',ev.target.parentNode)
+
+      
+    })
+
+
 
     </script>
 </html>
+<!-- 
+Buttons: 
+buttons should move people in the right directions
+add event listeners to buttons
+how do we know who is selected?
+	click listeners on people? where do we store who is selected? -->
